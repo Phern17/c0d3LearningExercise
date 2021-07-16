@@ -1,0 +1,80 @@
+<link rel="stylesheet" href="https://songz.c0d3.com/js4/exercises/war.css">
+<style>
+    .container {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        right: 0px;
+        left: 0px;
+        background-color: bisque;
+    }
+    
+    #attackText {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+    }
+</style>
+<div class="container">
+    <input type="text" name="attackText" id="attackText">
+</div>
+<script>
+    const container = document.querySelector('.container')
+    const control = document.querySelector('#attackText')
+    let isFirst = true
+
+    container.addEventListener('click', (e)=> {
+        
+        if (isFirst) {
+            new Character(true, e.clientX, e.clientY)
+            isFirst = false
+        } else {
+            new Character(false, e.clientX, e.clientY)
+        }
+    })
+
+    control.addEventListener('click', ()=> {
+        event.stopPropagation()
+    })
+
+    control.addEventListener('keyup', (event)=> {
+        if (event.key === 'a')
+        {
+            console.log('hi')
+            const population = document.querySelectorAll('.character')
+        
+            if (!population.length)
+                return
+
+            population[0].classList.add('attack')
+
+            setTimeout(()=> {
+                population[0].classList.remove('attack')    
+            }, 500)   
+        } else {
+            control.value = ''
+        }
+        
+    })
+
+    function Character(isWarrior, x, y) {
+        const div = document.createElement('div')
+
+        const classes = ['character', 'down']
+        classes.forEach((e)=> {
+            div.classList.add(e)
+        })
+
+        if (isWarrior)
+            div.classList.add('warrior')
+
+        const top = y - 32
+        div.style.top = `${top}px`
+        const left = x - 32
+        div.style.left = `${left}px`
+
+        container.append(div)
+
+        
+    }
+</script>

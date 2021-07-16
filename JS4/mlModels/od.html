@@ -1,0 +1,71 @@
+<script src="https://unpkg.com/ml5@0.4.2/dist/ml5.min.js"></script>
+<style>
+.container{
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.video, .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 640px;
+  height: 360px;
+}
+.box {
+  position: absolute;
+  border: 1px rgba(0, 255, 0, 1) solid;
+  color: rgba(0, 255,0, 1);
+  background: rgba(150, 255,150, 0.3);
+}
+.play {
+  margin-top: 380px;
+}
+</style>
+<div class="container">
+  <video class="video" src="https://songz.c0d3.com/js4/exercises/cars.mp4" ></video>
+  <div class="overlay"></div>
+</div>
+<button class="play">Play</button>
+
+<script>
+  const video = document.querySelector(".video")
+  const overlay = document.querySelector('.overlay')
+  const playButton = document.querySelector('.play')
+  playButton.addEventListener('click', () => {
+    video.play()
+  })
+
+  const draw = (arr = []) => {
+    overlay.innerHTML = ''
+    arr.forEach( (obj) => {
+      if (obj.confidence < 0.4) {
+        // really bad prediction, let's ignore this
+        return
+      }
+      const div = document.createElement('div')
+      div.classList.add('box')
+      div.innerText = obj.label
+      div.style.top = `${obj.y * 360}px`
+      div.style.left = `${obj.x * 640}px`
+      div.style.width = `${obj.w * 640}px`
+      div.style.height = `${obj.h * 360}px`
+
+      overlay.append(div)
+    })
+  }
+
+  // Create a YOLO method
+  const yolo = ml5.YOLO(video, () => {
+    detect()
+  });
+
+  const detect = () => {
+    requestAnimationFrame(() => {
+      yolo.detect((err, results) => {
+        draw(results)
+        detect()
+      })
+    })
+  }
+</script>

@@ -1,0 +1,24 @@
+<input class="userIn" type="text"/>
+<div class="typeDisplay"></div>
+<div class="display"></div>
+<script>
+    const display = document.querySelector('.display')
+    const typeDisplay = document.querySelector(".typeDisplay")
+    const userIn = document.querySelector('.userIn')
+
+    const outputArr = []
+
+    userIn.addEventListener('keyup', (e)=> {
+        if (e.key === "Enter"){
+            userIn.value = ''
+            outputArr.unshift(userIn.value)
+
+            const outputStr = outputArr.reduce((acc, e)=> {
+            return `${acc}<h1>${e}</h1>`
+            }, "")
+        }
+
+        typeDisplay.innerHTML = userIn.value
+    })
+
+</script>

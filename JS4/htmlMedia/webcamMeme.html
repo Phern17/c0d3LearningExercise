@@ -1,0 +1,30 @@
+<input type="text" class="memeText" /> 
+<video class="webcam"></video>
+<canvas class="canvas"></canvas>
+<script>
+    const webcam  = document.querySelector('.webcam')
+    const canvas = document.querySelector('.canvas')
+    const userIn = document.querySelector('.memeText')
+
+    const context = canvas.getContext('2d')
+    
+
+    navigator.mediaDevices.getUserMedia({
+       video: true
+    }).then((stream)=> {
+        webcam.srcObject = stream
+        webcam.play()
+    })
+
+    userIn.addEventListener('keyup', (event)=> {
+        if (event.key === "Enter")
+        {
+            canvas.width = webcam.videoWidth
+            canvas.height = webcam.videoHeight
+            context.drawImage(webcam, 0, 0)
+            context.font = "50px Comic Sans MS"
+            context.fillStyle = "white"
+            context.fillText(`${userIn.value}`, canvas.width / 2, Math.floor(canvas.height * 0.9))
+        }
+    })
+</script>

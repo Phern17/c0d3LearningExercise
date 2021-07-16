@@ -1,0 +1,15 @@
+<script>
+
+    const getData = () => {
+        fetch(`/online?name=${userName}`).then((res)=> {
+            return res.json()
+        }).then((body)=> {
+            console.log(body)
+        })
+
+        setTimeout(getData, 1000)
+    }
+    
+    getData()
+</script>
+

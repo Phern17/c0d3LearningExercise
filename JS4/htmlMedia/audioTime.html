@@ -1,0 +1,47 @@
+<audio class="aud"></audio>
+<input class="audSrc" type="text"/>
+<div class="display">Input an MP3 URL and hit Enter</div>
+<script>
+    const aud = document.querySelector(".aud")
+    const display = document.querySelector('.display')
+    const audSrc = document.querySelector(".audSrc")
+    let isStarted = false
+
+    aud.addEventListener('timeupdate', ()=> {
+        let sec = Math.floor(aud.currentTime)
+        let min = Math.floor(sec / 60)
+        min = min.toString()
+        min = min.length < 2 ? `0${min}` : min
+
+        sec = sec % 60
+        sec = sec.toString()
+        sec = sec.length < 2 ? `0${sec}` : sec
+        
+        display.innerText = `${min}:${sec}`
+        
+    })
+
+    audSrc.addEventListener('keyup', (event)=>{
+        if (event.key === 'Enter')
+        {
+            aud.src = audSrc.value    
+            aud.play()
+            isStarted = true
+        }
+    })
+
+    display.addEventListener('mouseenter', ()=>{
+        if (!isStarted)
+            return
+
+        aud.play()
+    })
+
+    display.addEventListener('mouseleave', ()=>{
+        if (!isStarted)
+            return 
+
+        aud.pause()
+    })
+  
+</script>

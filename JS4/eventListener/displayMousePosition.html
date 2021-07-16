@@ -1,0 +1,12 @@
+<h1 class="display">Hello World</h1>
+<script>
+    const display = document.querySelector(".display")
+    
+    display.addEventListener('mouseleave', ()=> {
+        display.innerHTML = "Hello World"
+    })
+
+    display.addEventListener('mousemove', (event)=> {
+        display.innerHTML = `X: ${event.clientX}, Y: ${event.clientY}`
+    })
+</script>

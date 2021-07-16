@@ -1,0 +1,82 @@
+<style>
+    .squares {
+        display: inline-block;
+        border: 1px solid black;
+        width: 50px;
+        height: 50px; 
+        vertical-align: top;
+    }
+
+    #matrix {
+        margin-bottom: 20px;
+    }
+
+    .rowDiv {
+        display: flex;
+    }
+</style>
+<input type="number" name="matrix" id="matrix">
+<div class="squaresContainer">
+</div>
+
+<script>
+    const squareCon = document.querySelector('.squaresContainer')
+    const matrix = document.querySelector('#matrix')
+    let showing = false
+
+    function square(rowDiv, rowNum, colNum) {
+        const div = document.createElement('div')
+        div.classList.add('squares')
+        div.addEventListener('click', ()=> {
+            const outputIndex = `r${rowNum},c${colNum}`
+            div.innerText = outputIndex
+        })
+        rowDiv.append(div)
+    }
+
+    // generate all the squares inside one row
+    const generateCols = (col, rowNum, rowDiv, i=0) => {
+        if (i === col){
+            return
+        }
+        
+        new square(rowDiv, rowNum, i)
+        
+        return generateCols(col, rowNum, rowDiv, i+1)
+    }
+
+    const grid = (rows, cols, displayArea, i=0) => {
+        if (i === rows){    
+            return
+        }
+            
+        
+        const rowDiv = document.createElement('div')
+        rowDiv.classList.add('row')
+        generateCols(cols, i, rowDiv)
+        displayArea.append(rowDiv)
+        
+        return grid(rows, cols, displayArea, i+1)
+    }
+
+    matrix.addEventListener('keyup', ()=> {
+        if (event.key === 'Enter') {
+
+            if (showing) {
+                squareCon.removeChild(squareCon.lastChild)
+                showing = false
+            }
+                
+            const num = matrix.value
+            
+            const displayMatrix = document.createElement('div')
+            displayMatrix.classList.add('displaySquares')
+            grid(+num, +num, displayMatrix)
+            squareCon.append(displayMatrix)
+            showing = true
+            matrix.value = ''
+            
+        }
+    })
+    
+</script>

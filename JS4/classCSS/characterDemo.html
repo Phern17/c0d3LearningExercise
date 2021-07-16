@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="https://songz.c0d3.com/js4/exercises/war.css">
+<link rel="stylesheet" href="characterDemo.css">
+<h1>Class Names</h1>
+<h3>Warrior</h3>
+<div class="row warriorContainer">
+</div>
+<h3>Peasant</h3>    
+<div class="row peasantContainer">
+</div>    
+<script>
+    const warriorContainer = document.querySelector('.warriorContainer')
+    const peasantContainer = document.querySelector('.peasantContainer')
+    
+    const directions = ['up', 'down', 'left', 'right']
+
+    directions.forEach((direction, outerIndex)=> {
+        const left = 128 * (2 * outerIndex)
+        new Peasant(left, direction)
+    })
+
+    directions.forEach((direction, outerIndex)=> {
+        const left = 128 * (2 * outerIndex)
+        new Warrior(left, direction, true)
+    })
+
+    function Warrior (left, direction, isAttacking=false) {
+        const div = document.createElement('div')
+        div.classList.add('characterContainer')
+        warriorContainer.append(div)
+
+        // because every 1 sec we have to render different form of
+        // warrior, that's why we need to create a function of it
+        const render = () => {
+            let attacking = ''
+            let dot = ''
+
+            if (isAttacking) {
+                attacking = 'attack'
+                dot = '.'
+            }
+
+            div.style.left = `${left}px`
+            div.innerHTML = `
+                <div class="character warrior ${direction} ${attacking}"></div> 
+                <p class="description">.character.warrior.${direction}${dot}${attacking}</p>
+            `
+
+            setTimeout(()=> {
+                isAttacking = !isAttacking
+                render()
+            }, 500)
+            
+        }
+
+        render()
+    }
+
+    function Peasant (left, direction) {
+        const div = document.createElement('div')
+        div.classList.add('characterContainer')
+        peasantContainer.append(div)
+
+        div.style.left = `${left}px`
+        div.innerHTML = `
+            <div class="character ${direction}"></div>
+            <p class="description">.charcter.${direction}</p>
+        `
+
+    }
+
+
+</script>

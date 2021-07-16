@@ -1,0 +1,153 @@
+<button class="prevBtn">Prev</button>
+<button class="nextBtn">Next</button>
+<hr>
+<div class="storyContent"></div>
+<hr>
+<textarea class="userIn"></textarea>
+<button class="submitBtn">Submit</button>
+<div class="storyBooks"></div>
+<script>
+
+    const prevBtn = document.querySelector(".prevBtn")
+    const nextBtn = document.querySelector(".nextBtn")
+    const storyContent = document.querySelector(".storyContent")
+    const userIn = document.querySelector(".userIn")
+    const submitBtn = document.querySelector(".submitBtn")
+    const storyBooks = document.querySelector(".storyBooks")
+
+    let index = 0 // to keep track when user click prev or next button
+
+
+    const storedBooks = localStorage.getItem('storedBooks') || '[]'
+
+    // to store every book available, all should be in just string format
+    let availableBooks = JSON.parse(storedBooks)
+
+    if (!availableBooks.length){
+        availableBooks = [
+            "Harry potter is a nice guy",
+            "Dogs faith",
+            "Dark knight"
+        ]
+    }
+
+    // first we get all the string inside available books to be displayed on the webpage
+    const renderStoryBooks = (i=0, outStr='') => {
+        localStorage.setItem('storedBooks', JSON.stringify(availableBooks))
+
+        if (availableBooks.length <= 0){
+            storyContent.innerHTML = ""
+            index = -1
+        }
+
+
+        storyBooks.innerHTML = availableBooks.reduce((acc, e)=> {
+                                    acc = acc + `<h1 class="book">${e}</h1>`
+                                    return acc
+                                }, "")
+
+        const book = document.querySelectorAll(".book")
+
+        book.forEach((element, index)=> {
+            element.addEventListener('click', ()=> {
+                availableBooks.splice(index, 1)
+                renderStoryBooks()
+            })
+        })
+    }
+
+    // second we have another function to control the storyContent section
+    const iterate = () => {
+        // this function will cater for both previous / next button on click event
+        storyContent.innerHTML = `<p>${availableBooks[index]}</p>`
+    }
+    
+    prevBtn.addEventListener('click', ()=> {
+        index = (index - 1) % availableBooks.length
+        iterate()
+    })
+
+    nextBtn.addEventListener('click', ()=> {
+        index = (index + 1) % availableBooks.length
+        iterate()
+    })
+
+    // once submitted, we will unshift the new story to the collection
+    submitBtn.addEventListener('click', ()=> {
+        availableBooks.push(userIn.value)
+        renderStoryBooks()
+        userIn.value = ''
+    })
+
+
+    renderStoryBooks()
+    iterate()
+
+
+
+
+
+
+
+
+
+    // const storedBooks = localStorage.getItem("ebooks") || '[]'
+
+    // let availableBooks = JSON.parse(storedBooks)
+    // 
+
+
+    // const renderStory = () => {
+    //     storyContent.innerHTML = `<h1>${availableBooks[index]}</h1>`
+    // }
+
+    // const render = () => {
+
+    //     localStorage.setItem("ebooks", JSON.stringify(availableBooks))
+
+    //     storyBooks.innerHTML = availableBooks.reduce((acc, e) => {
+    //         return acc + `<h2 class="storyItem">${e}</h2>`
+    //     }, "")
+
+    //     const allStoryItems = document.querySelectorAll(".storyItem")
+
+    //     allStoryItems.forEach((e, i)=>{
+    //         e.onclick = () => {
+    //             availableBooks.splice(i, 1)
+
+    //             render()
+    //         }
+    //     })
+    // }
+
+    // submitBtn.addEventListener('click', ()=>{
+    //     availableBooks.unshift(userIn.value)
+    //     userIn.value = ''
+    //     render()
+    // })
+
+    // prevBtn.addEventListener('click', ()=> {
+    //     index -= 1
+
+    //     if (index < 0){
+    //         alert("This is the first story")
+    //         index = 0
+    //     }    
+        
+    //     renderStory()
+    // })
+
+    // nextBtn.addEventListener('click', ()=> {
+    //     index += 1
+
+    //     if (index > availableBooks.length - 1)
+    //         alert("This is the last story")
+    //         index = availableBooks.length - 1
+        
+    //     renderStory()
+    // })
+
+    // render()
+    // renderStory()
+
+</script>

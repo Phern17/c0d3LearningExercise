@@ -1,0 +1,38 @@
+<h1>To Do List</h1>
+<input class="userIn" type="text" />
+<button class="addBtn">Add</button>
+<div class="display"></div>
+<script>
+    const userInput = document.querySelector(".userIn")
+    const addBtn = document.querySelector(".addBtn")
+    const display = document.querySelector(".display")
+
+    const savedArray = localStorage.getItem("savedList") || '[]'
+
+    const toDoArray = JSON.parse(savedArray)
+    
+    const render = () => {
+        localStorage.setItem("savedList", JSON.stringify(toDoArray))
+        display.innerHTML = toDoArray.reduce((acc, e)=>{
+            return acc + `<h2 class="item">${e}</h2>`
+        }, "")
+
+        const items = document.querySelectorAll(".item")
+
+        items.forEach((e, i)=>{
+            e.onclick = () => {
+                toDoArray.splice(i,1)
+                render()
+            }
+        })
+    }
+
+    addBtn.addEventListener("click", ()=>{
+        toDoArray.unshift(userInput.value)
+
+        render()
+        
+    })
+
+    render()
+</script>

@@ -1,0 +1,58 @@
+<style>
+    .container {
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        background-color: bisque;
+        width: 100%;
+    }
+
+    .bubble {
+        text-align: center;
+        position: fixed;
+        border-radius: 50%;
+        border: 1px solid black;
+        width: 100px;
+        height: 100px;
+        background-color: cornflowerblue;
+        font-size: 20px;
+        user-select: none;
+    }
+</style>
+<div class="container"></div>
+<script>
+    function Bubble (x, y) {
+        const bubble = document.createElement('div')
+        bubble.classList.add('bubble')
+        let lives = 10
+        bubble.innerHTML = `<h3>${lives}</h3>`
+        bubble.style.left = x - 50;
+        bubble.style.top = y - 50;
+        container.append(bubble)
+
+        const popBubble = () => {
+            
+            if (lives <= 1) {
+                bubble.remove()
+                
+            }
+
+            lives = lives - 1
+
+            bubble.innerHTML = `<h3>${lives}</h3>`
+        }
+
+        bubble.addEventListener('click', (event)=> {
+            event.stopPropagation()
+            popBubble()
+        })
+    }
+
+    const container = document.querySelector('.container')
+    
+    container.addEventListener('click', (event)=> {
+        new Bubble(event.clientX, event.clientY)
+    })
+</script>

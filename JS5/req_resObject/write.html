@@ -1,0 +1,14 @@
+<div class="container">
+    ${displayNotes}
+</div>
+<hr>
+<textarea name="" id="newMsg" cols="30" rows="10"></textarea>
+<button class="submitBtn">Submit</button>
+<script>
+    const newMsg = document.querySelector('#newMsg')
+    const submitBtn = document.querySelector('.submitBtn')
+
+    submitBtn.addEventListener('click', ()=> {
+        fetch('./notes/add?content=' + newMsg)
+    })
+</script>

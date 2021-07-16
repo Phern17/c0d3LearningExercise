@@ -1,0 +1,16 @@
+body {
+    margin: 0px;
+    overflow: hidden;
+}
+
+.bigImage {
+    position: absolute;
+    right: 0;
+    bottom: 0;    
+}
+
+.arrow {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

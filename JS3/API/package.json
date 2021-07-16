@@ -1,0 +1,17 @@
+{
+  "name": "API",
+  "version": "1.0.0",
+  "description": "",
+  "main": "printLessonTitles.js",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

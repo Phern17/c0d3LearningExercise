@@ -1,0 +1,115 @@
+<link rel="stylesheet" href="captionMaker.css">
+<div class="container">
+    <div class="video-player">
+        <video class="vPlayer" src="https://songz.c0d3.com/js4/exercises/pubDomainRemix.mp4" controls></video>
+        <div class="captions"></div>
+    </div>
+    <div class="caption-editor">
+        <h1>Add Caption</h1>
+        <input type="text" name="caption-text" id="caption-text" placeholder="Caption text">
+        <input type="number" name="start-time" id="start-time" placeholder="start time (ms)">
+        <input type="number" name="end-time" id="end-time" placeholder="end time (ms)">
+        <button class="save-btn">Save</button>
+        <hr>
+        <div class="caption-display"></div>
+    </div>
+</div>
+<script>
+    const vPlayer = document.querySelector('.vPlayer')
+    const captionText = document.querySelector('#caption-text')
+    const startTime = document.querySelector('#start-time')
+    const endTime = document.querySelector('#end-time')
+    const saveBtn = document.querySelector('.save-btn')
+    const captionDisplay = document.querySelector('.caption-display')
+    const displayVideoCaption = document.querySelector('.captions')
+
+    function captionClass (text, startTiming, endTiming) {
+        
+    }
+
+    const captionsStore = [
+        {
+            caption: "A beautiful typewriter",
+            start: 0,
+            end: 3000 
+        }, 
+        {
+            caption: "On to a big piece of paper",
+            start: 3000,
+            end: 7000
+        },
+        {
+            caption: "Transitioning to Video!",
+            start: 7000,
+            end: 8000
+        },
+        {
+            caption: "Video of horse, then magazine",
+            start: 8000,
+            end: 13000
+        }
+    ]
+
+    // render all elements inside the captionsStore array, so that
+    // whenever that's an update on the array, it can simply replace
+    // the current innerHTML to newest one.
+
+    const renderCaption = () => {
+        captionDisplay.innerHTML = captionsStore.reduce((acc, e)=> {
+            const resultStr = `
+                <div class="actualCaption">${e.caption}</div>
+                <div class="timingSet">
+                    <div class="startTime">${e.start}</div>
+                    <div class="endTime">${e.end}</div>
+                </div>
+            `
+            return `${acc}<div class='captionInfo'>${resultStr}</div>`
+        }, '')
+
+        const captionEvents = document.querySelectorAll('.captionInfo')
+        captionEvents.forEach((e, i)=> {
+            e.addEventListener('click', ()=> {
+                const deleteConfirm = confirm('Delete this caption?')
+                if (deleteConfirm){
+                    captionsStore.splice(i, 1)
+                    renderCaption()
+                }
+            })
+        })  
+    }
+    
+    vPlayer.addEventListener('timeupdate', ()=> {
+        const curMs = vPlayer.currentTime * 1000
+        const captionsAfterCurr = captionsStore.filter((e)=> {
+            return e.start <= curMs
+        })
+
+        const actualDisplayCaptions = captionsAfterCurr.filter((e)=> {
+            return e.end > curMs
+        })
+
+        let captionTxt = ''
+
+        if (actualDisplayCaptions.length) {
+            captionTxt = actualDisplayCaptions[0].caption
+        }
+
+        displayVideoCaption.innerText = captionTxt
+    })
+    
+
+    renderCaption()
+
+    const setCaption = () => {
+        new captionClass(captionText.value, startTime.value, endTime.value)
+        
+        captionsStore.push(newCaption)
+        renderCaption()
+        
+        captionText.value = ''
+        startTime.value = null
+        endTime.value = null
+    }
+
+    saveBtn.addEventListener('click', setCaption)
+</script>

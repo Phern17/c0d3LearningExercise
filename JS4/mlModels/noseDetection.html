@@ -1,0 +1,86 @@
+<video class="video" width=640 height=480></video>
+<canvas class="canvas" width=640 height=480></canvas>
+<button class="convert">GET NOSE</button>
+
+<script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+<script>
+    const canvasElement = document.querySelector('.canvas')
+    const ctx = canvasElement.getContext('2d') // get a brush pen on a particular canvas
+    ctx.strokeStyle = 'red'
+    ctx.lineWidth = 15
+
+    const videoElement = document.querySelector('.video')
+    const noseButton = document.querySelector('.convert')
+
+    navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: false
+    }).then((stream)=> {
+        videoElement.srcObject = stream
+        videoElement.play()
+    })
+
+    let isReady = false
+    
+    /* 
+        load the faceAPI model using the ml5 library
+        Landmarks uses the face detection model to 
+        determine facial features like nose, eyebrows, mouth, etc.
+        To tell the faceAPI to use the landmarks feature, we
+        pass in an object with the 'withLandmarks: true' property
+        when running the ml5.faceApi function.
+    */
+
+    const faceapi = ml5.faceApi({
+        withLandmarks: true
+    }, ()=> {
+        isReady = true
+        detect()
+    })
+
+    const detect = () => {
+        if (!isReady) {
+            return alert('MODEL is not loaded... please wait and try again')
+        }
+
+        // feed the input (video, image, text, etc) into the model.
+
+        //Make sure the following function is run after the model has been loaded
+        faceapi.detect(videoElement, (err, results) => {
+            console.log('err', err, results)
+            // Always check for erros, or if there are no results
+            if(err || !results || !results.length) {
+                return
+            }
+
+            // First draw the video element into the canvas,
+            // then draw the nose on top of that image
+            ctx.drawImage(videoElement, 0, 0)
+
+            /*  
+                results will be an array of objects (faces detected).
+                Each object will have a key called parts;
+                each part object has a nose property, which is an array of points.
+                We only want the first face's nose array (results[0])
+            */
+
+            const nosePaths = results[0].parts.nose
+            draw(nosePaths)
+        })
+    }
+    
+    noseButton.addEventListener('click', detect)
+
+    const draw = (pathArr) => {
+        const firstPoint = pathArr.shift()
+        ctx.beginPath()
+        ctx.moveTo(firstPoint.x, firstPoint.y)
+        pathArr.forEach((point)=> {
+            console.log('point', point)
+            ctx.lineTo(point.x, point.y)
+        })
+
+        ctx.stroke()
+    }
+
+</script>

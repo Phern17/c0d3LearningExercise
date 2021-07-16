@@ -1,0 +1,43 @@
+<audio class="aud"></audio>
+<input class="audSrc" type="text"/>
+<div class="display">Input an MP3 URL and hit Enter</div>
+<script>
+    const aud = document.querySelector('.aud')
+    const audSrc = document.querySelector('.audSrc')
+    const display = document.querySelector('.display')
+    let musicPlaying = false 
+
+    audSrc.focus()
+
+    audSrc.addEventListener('keyup', ()=> {
+        if (event.key === 'Enter'){
+            aud.src = audSrc.value 
+            aud.play()
+            display.innerHTML = ''
+            createMusicPlayer()
+        }
+    })
+
+    const createMusicPlayer = () => {
+        const playingText = document.createElement('h1')
+        playingText.innerText = 'Playing...'
+        display.append(playingText)
+
+        playingText.addEventListener('mouseenter', ()=> {
+            if (musicPlaying === true) return
+            
+            aud.play()
+            playingText.innerText = 'Playing...'
+            musicPlaying = true
+        })
+
+        playingText.addEventListener('mouseleave', ()=> {
+            if (musicPlaying === false) return
+
+            aud.pause()
+            playingText.innerText = 'Paused'
+            musicPlaying = false
+        })
+    }
+  
+</script>

@@ -1,0 +1,26 @@
+<video class="video"></video>
+<canvas class="canvas"></canvas>
+
+<script>
+  const canvas = document.querySelector('.canvas')
+  const context = canvas.getContext('2d')
+  const videoElement = document.querySelector('.video')
+
+  const delayPicture = () => {
+    setTimeout(() => {
+      canvas.width = videoElement.videoWidth
+      canvas.height = videoElement.videoHeight
+      context.drawImage(videoElement, 0, 0)
+      delayPicture()
+    }, 5000)
+  }
+
+  navigator.mediaDevices.getUserMedia({
+    video: true, // webcam
+    audio: true, // microphone
+  }).then((stream) => {
+    videoElement.srcObject = stream
+    videoElement.play()
+    delayPicture()
+  })
+</script>

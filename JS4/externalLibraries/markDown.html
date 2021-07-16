@@ -1,0 +1,13 @@
+<textarea class="textArea" rows="10" cols="40"></textarea>
+<div class="display"></div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+    const textArea = document.querySelector('.textArea')
+    const display = document.querySelector('.display')
+
+    textArea.addEventListener('keyup', ()=> {
+        display.innerHTML = marked(textArea.value)
+
+    })
+
+</script>

@@ -1,0 +1,80 @@
+<button class="prev">Previous</button>
+<button class="next">Next</button>
+<hr>
+<p class="display"></p>
+<hr>
+<textarea class="userInput"></textarea>
+<button class="submit">Submit</button>
+<div class="titles"></div>
+<script>
+    const prevBtn   = document.querySelector(".prev")
+    const nextBtn   = document.querySelector(".next")
+    const pDisplay  = document.querySelector(".display")
+    const userInput = document.querySelector(".userInput")
+    const submBtn   = document.querySelector(".submit")
+    const title     = document.querySelector(".titles")
+
+    const lsData = localStorage.getItem("stories") || '[]'
+   
+    let dataArray = JSON.parse(lsData)
+    if (!dataArray.length){
+        dataArray = [
+            "Harry potter is a nice guy",
+            "Dogs faith",
+            "Dark knight"
+        ]
+    }
+
+    // to display whatever element is on the stories array
+    const renderStories = () => {
+        // update to local storage first 
+        localStorage.setItem("stories", JSON.stringify(dataArray))
+        // display those stories
+        title.innerHTML = dataArray.reduce((acc, e)=> {
+            return acc + `<h3 class="storyItem">${e}</h3>`
+        }, '')
+
+        const storyItem = document.querySelectorAll(".storyItem")
+        storyItem.forEach((e, i)=> {
+            e.addEventListener('click', ()=>{
+                dataArray.splice(i,1)
+                renderStories()
+            })
+        })
+    }
+
+    let storyIdx = 0
+
+    prevBtn.addEventListener('click', ()=>{
+        storyIdx -= 1
+        if (storyIdx < 0)
+            storyIdx = 0
+
+        render()
+    })
+
+    nextBtn.addEventListener('click', ()=>{
+        storyIdx += 1
+        if (storyIdx >= dataArray.length)
+            storyIdx = dataArray.length - 1
+
+        render()
+    })
+
+    const render = () => {
+        pDisplay.innerText = dataArray[storyIdx]
+    }
+
+    submBtn.addEventListener('click', ()=>{
+        const val = userInput.value
+        if (val.length < 3)
+            return alert("input too short")
+        dataArray.push(val)
+        renderStories()
+        userInput.value = ''
+    })
+
+    renderStories()
+    render()
+
+</script>

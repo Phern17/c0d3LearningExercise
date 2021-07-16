@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="mouseMagnifier.css">
+<div class="container">
+    <div class="smallImage">
+        <img class="small" src="https://songz.c0d3.com/js4/exercises/300x225.jpeg" alt="small dog">
+    </div>
+    <div class="bigImage">
+        <img src="https://songz.c0d3.com/js4/exercises/800x600.jpeg">
+        <img class="arrow" src="https://songz.c0d3.com/js4/exercises/arrow.png">
+    </div>
+</div>
+<script>
+    const smallImage = document.querySelector('.small')
+    const arrow = document.querySelector('.arrow')
+
+    smallImage.addEventListener('mousemove', (event)=> {
+        const posX = event.clientX * (800/300)
+        const posY = event.clientY * (800/300)
+
+        arrow.style.top = `${posY}px`
+        arrow.style.left = `${posX}px`
+    })
+</script>

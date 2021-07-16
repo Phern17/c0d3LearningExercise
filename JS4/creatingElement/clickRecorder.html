@@ -1,0 +1,9 @@
+<div class="display"></div>
+<script>
+    const display = document.querySelector(".display")
+    document.addEventListener('click', ()=> {
+        const newElement = document.createElement('h1')
+        newElement.innerText = `X: ${event.clientX}, Y: ${event.clientY}`
+        display.prepend(newElement)
+    })
+</script>

@@ -1,0 +1,44 @@
+<h1>Friends List</h1>
+<label>Name:</label>
+<input type="text" class="inName"/>
+<label>Age:</label>
+<input type="text" class="inAge" />
+<button class="addBtn">Add</button>
+<div class="display"></div>
+<script>
+    const inName    = document.querySelector(".inName")
+    const inAge     = document.querySelector(".inAge")
+    const display   = document.querySelector(".display")
+    const addBtn    = document.querySelector(".addBtn")
+
+    const lsFriends = localStorage.getItem("friendsInfo") || '[]'
+
+    const fArray    = JSON.parse(lsFriends)
+
+    const render = () => {
+        localStorage.setItem('friendsInfo', JSON.stringify(fArray))
+        
+        display.innerHTML = fArray.reduce((acc, e)=>{
+            return acc + `
+            <div>
+                <h2 class='outName'>${e.name}</h2>
+            </div>`
+         },'')
+
+        const nameList = document.querySelectorAll(".outName")
+         nameList.forEach((e, i)=>{
+            e.addEventListener('click', ()=>{
+                alert("The person age: " + fArray[i].age)
+            })
+         })
+
+    }
+
+    addBtn.addEventListener('click', ()=>{
+         fArray.push({  name: inName.value,
+                        age: inAge.value})
+         render()
+    })
+
+    render()
+</script>

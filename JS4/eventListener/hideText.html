@@ -1,0 +1,52 @@
+<input class="userInput" type="text"/>
+<div class="typeDisplay"></div>
+<div class="display"></div>
+<script>
+    const logs = [] 
+    const userInput = document.querySelector(".userInput")
+    const typeDisplay = document.querySelector('.typeDisplay')
+    const display = document.querySelector('.display')
+
+    const render = () => {
+        display.innerHTML = logs.reduce((acc, e)=> {
+                return `${acc}<h1 class="hidden">${e.fake}</h1>`
+            }, "")
+
+            const allHideContent = document.querySelectorAll(".hidden")
+
+            allHideContent.forEach((e, i)=> {
+                e.addEventListener('mouseenter', ()=> {
+                    e.innerText = logs[i].real
+                })
+
+                e.addEventListener('mouseleave', ()=> {
+                    e.innerText = logs[i].fake
+                })
+            })
+    }
+
+    const displayX = (num, outStr='') => {
+        if (num === 0)
+            return outStr
+
+        outStr += 'X'
+
+        return displayX(num-1, outStr)
+    }
+
+    userInput.addEventListener('keyup', (e)=> {
+        if (e.key === 'Enter') {
+            logs.unshift({ real: userInput.value, fake: Math.random() })
+
+           render()
+           userInput.value = ''
+        } 
+
+        const outputStr = displayX(userInput.value.length)
+
+        typeDisplay.innerHTML = outputStr
+        
+    })
+
+    
+</script>

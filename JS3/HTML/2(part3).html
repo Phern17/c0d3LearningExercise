@@ -1,0 +1,49 @@
+<button class="add-btn">Add</button>
+<input type="text" class="userIn" />
+<button class="fil-btn">Filter</button>
+<input type="text" class="filterIn"/>
+<div class="todoItems"></div>
+<script>
+    const btn = document.querySelector(".add-btn")
+    const userIn = document.querySelector(".userIn")
+    const display = document.querySelector(".todoItems")
+    const filterIn = document.querySelector(".filterIn")
+    const filBtn = document.querySelector(".fil-btn")
+
+    const lsData = localStorage.getItem("todo-items") || '[]'
+
+    const tdArray = JSON.parse(lsData)
+
+    const render = (arr=tdArray) => {
+        // store the array items into local storage
+        localStorage.setItem("todo-items", JSON.stringify(tdArray))
+        // reduce the array items to display them
+        display.innerHTML = arr.reduce((acc, e)=> {
+            return acc + `<h2 class="todo">${e}</h2>`
+        }, '')
+        const todoElements = document.querySelectorAll(".todo")
+        todoElements.forEach((e,i)=>{
+            e.onclick = () => {
+                tdArray.splice(i, 1)
+                render()
+            }
+        })
+    
+    }
+
+    btn.addEventListener('click', () => {
+      tdArray.push(userIn.value)
+      render()
+    })
+
+    filBtn.addEventListener('click', () =>{
+        const res = tdArray.filter((e)=>{
+            return e.includes(filterIn.value)
+        })
+
+        render(res)
+
+    })
+
+    render()
+</script>

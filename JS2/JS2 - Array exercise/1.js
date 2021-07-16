@@ -1,0 +1,1 @@
+const identicalStringArray = ["This", "That", "Those"]

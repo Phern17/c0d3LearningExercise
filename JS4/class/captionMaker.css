@@ -1,0 +1,53 @@
+body {
+    margin: 0px;
+}
+
+.video-player {
+    width: 100%;
+    background-color: rgba(38, 65, 78, 1);
+    text-align: center;
+    position: fixed;
+    z-index: 1;
+}
+
+.vPlayer {
+    height: 400px;
+}
+
+.captions {
+    width: 100%;
+    background-color: rgba(38, 65, 78, 0.336);
+    position: absolute;
+    top: 10px;
+    font-size: large;
+    color: white;
+}
+
+.caption-editor {
+    position: relative;
+    top: 420px;
+    width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+.captionInfo {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 30px;
+    padding-top: 20px;
+}
+
+.timingSet {
+    display: flex;
+    width: 200px;
+}
+
+.startTime {
+    width: 50%;
+}
+
+.endTime {
+    width: 50%;
+}

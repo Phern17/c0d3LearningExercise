@@ -1,0 +1,42 @@
+<!-- <h1>Add option</h1>
+<input class="userIn" type="text" />
+<button class="addBtn">Add</button><br>
+<select class="options"></select>
+<script>
+    const userInput = document.querySelector(".userIn")
+    const addBtn = document.querySelector(".addBtn")
+    const options = document.querySelector(".options")
+    const optArray = []
+
+    addBtn.addEventListener('click', ()=>{
+        
+        optArray.unshift(userInput.value)
+
+        options.innerHTML = optArray.reduce((acc, e)=>{
+            return acc + `<option>${e}</option>`
+        }, "")
+   
+    })
+
+</script> -->
+
+<h1>Add option</h1>
+<input class="userIn" type="text" />
+<button class="addBtn">Add</button><br>
+<select class="options"></select>
+<script>
+    const userIn = document.querySelector('.userIn')
+    const addBtn = document.querySelector('.addBtn')
+    const options = document.querySelector('.options')
+
+    let currentOptStr = ""
+
+    const addOptions = () => {
+        currentOptStr = `<option>${userIn.value}</option>` + currentOptStr
+        options.innerHTML = currentOptStr
+    }
+
+    addBtn.addEventListener('click', addOptions)
+
+
+</script>

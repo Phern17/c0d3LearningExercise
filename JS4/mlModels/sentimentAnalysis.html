@@ -1,0 +1,26 @@
+<textarea cols="30" rows="20" class="userInputField"></textarea>
+<button class="analyzeBtn">Analyze</button>
+<script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+<script>
+    const userInput = document.querySelector('.userInputField')
+    const startBtn = document.querySelector('.analyzeBtn')
+
+    // when the page loads, first load the movieReviews model by calling the function:
+    const sentiment = ml5.sentiment('movieReviews', ()=> {
+        console.log('model loaded!')
+    })
+
+    // when the user clicks on the button, get the value from the input element and run
+    // the predict function. result.score is a sentiment value between 0 ("negative") and
+    // 1 ("positive")
+    startBtn.addEventListener('click', ()=> {
+        const result = sentiment.predict(userInput.value)
+        if (result.score > 0.8) {
+            alert('😁😁😄')
+        }
+
+        else {
+            alert('😭😭😭')
+        }
+    })
+</script>

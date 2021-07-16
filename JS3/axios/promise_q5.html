@@ -1,0 +1,22 @@
+<div class="displayArea"></div>
+<script>    
+    const dispArea = document.querySelector('displayArea')
+
+    const displayLessonTitles = () => {
+        fetch('https://www.c0d3.com/api/lessons')
+        .then( (res)=> {
+            return res.json()
+        })
+        .then( (data)=> {
+            const res = data.reduce( (acc, e) => {
+                return `${acc}<h1>e.title</h1>`
+            }, "")
+
+            return res
+        })
+    }
+
+    dispArea.innerHTML = displayLessonTitles()
+
+
+</script>

@@ -1,0 +1,28 @@
+<h1>Friends List</h1>
+<label>Name:</label>
+<input type="text" class="inName"/>
+<label>Age:</label>
+<input type="text" class="inAge" />
+<button class="addBtn">Add</button>
+<div class="display"></div>
+<script>
+    const inName    = document.querySelector(".inName")
+    const inAge     = document.querySelector(".inAge")
+    const display   = document.querySelector(".display")
+    const addBtn    = document.querySelector(".addBtn")
+
+    let nameArray   = []
+    let ageArray    = []
+
+    addBtn.addEventListener('click', ()=>{
+         nameArray.push(inName.value)
+         ageArray.push(inAge.value)
+         display.innerHTML = nameArray.reduce((acc, e, i)=>{
+            return acc + `
+            <div>
+                <h2 class='outName'>${e}</h2>
+                <h2 class='outAge'>${ageArray[i]}</h2>
+            </div>`
+         },'')
+    })
+</script>

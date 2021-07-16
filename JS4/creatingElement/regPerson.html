@@ -1,0 +1,30 @@
+<button class="Add">Add Person</button>
+<div class="displayInput"></div>
+<hr>
+<div class="displayName"></div>
+<script>
+    const addBtn = document.querySelector('.Add')
+    const displayInput = document.querySelector('.displayInput')
+    const displayName = document.querySelector('.displayName')
+    let currStr = ""
+
+    addBtn.addEventListener('click', ()=> {
+        displayInput.innerHTML = `
+                                    First Name: <input class="firstName"/>
+                                    Last Name: <input class="lastName"/>
+                                    <button class="regBtn">Register</button>
+                                `
+        const firstName = document.querySelector('.firstName')
+        const lastName = document.querySelector('.lastName')
+        const regBtn = document.querySelector('.regBtn')
+
+        regBtn.addEventListener('click', ()=> {
+        
+        currStr =  currStr.length > 0 ? `${currStr}, ${firstName.value} ${lastName.value}`:  `${firstName.value} ${lastName.value}`
+        displayName.innerText = currStr
+        displayInput.innerHTML = ``
+        })
+    })
+
+    
+</script>

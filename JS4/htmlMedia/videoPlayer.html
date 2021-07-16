@@ -1,0 +1,51 @@
+<input type="text" class="videoStream" />
+<h1 class="display">Input an URL to play a video </h1>
+<video class="videoPlayer"></video>
+<script>
+    const videoInput = document.querySelector('.videoStream')
+    const display = document.querySelector('.display')
+    const videoPlayer = document.querySelector('.videoPlayer')
+    let eventStarted = false
+    videoInput.focus()
+
+    //constantly updating the play time of video
+    videoPlayer.addEventListener('timeupdate', ()=>{
+        let sec = Math.floor(videoPlayer.currentTime)
+        let min = Math.floor(sec / 60)
+        min = min.toString()
+        if (min.length < 2)
+            min = `0${min}`
+
+        sec = (sec % 60).toString()
+        if (sec.length < 2)
+            sec = `0${sec}`
+
+        display.innerText = `${min}:${sec}`
+    })
+
+    //once user pressed enter
+    videoInput.addEventListener('keyup', (event)=>{
+        if (event.key === "Enter")
+        {
+            videoPlayer.src = videoInput.value
+            eventStarted = true
+            videoPlayer.play()
+
+        }
+    })
+
+    //once mouse enter the videoPlayer
+    videoPlayer.addEventListener('mouseenter', ()=>{
+        if (!eventStarted)
+            return
+
+        videoPlayer.play()
+    })
+
+    videoPlayer.addEventListener('mouseleave', ()=>{
+        if (!eventStarted)
+            return
+
+        videoPlayer.pause()
+    })
+</script>

@@ -1,0 +1,26 @@
+<script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+<textarea class="userInput" rows="10" cols="30"></textarea>
+<button class="changeBtn">Change</button>
+<select class="voiceOpt"></select>
+<script>
+    const userInput = document.querySelector('.userInput')
+    const changeBtn = document.querySelector('.changeBtn')
+    const voiceOptions = document.querySelector('.voiceOpt')
+
+    const getOptions = () => {
+        const allVoices = responsiveVoice.getVoices()
+        const allOptions = allVoices.forEach((e)=> {
+            const option = document.createElement('option')
+            option.value = `${e.name}`
+            option.innerText = `${e.name}`
+            voiceOptions.append(option)
+        })
+    }
+
+    getOptions()
+
+    changeBtn.addEventListener('click', ()=> {
+        responsiveVoice.speak(userInput.value, voiceOptions.value)
+    })
+
+</script>

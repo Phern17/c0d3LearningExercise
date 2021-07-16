@@ -1,0 +1,25 @@
+.row {
+    display: flex;
+    height: 200px;
+    justify-content: space-evenly;
+}
+
+h3 {
+  font-size: 30px;  
+}
+
+.characterContainer {
+    height: 150px;
+    width : 100%;
+    display: block;
+}
+
+p  {
+    display: block;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    position: absolute;
+    bottom: 0px;
+}
